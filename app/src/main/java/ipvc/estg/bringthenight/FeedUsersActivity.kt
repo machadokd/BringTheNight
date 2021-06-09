@@ -1,0 +1,11 @@
+package ipvc.estg.bringthenight
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+
+class FeedUsersActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_feed_users)
+    }
+}
