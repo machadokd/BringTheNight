@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
 }
 
@@ -14,6 +15,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,4 +51,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.0'
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
+
+
+//    CIRCULAR IMAGE
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+
+//    MULTIDEX
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

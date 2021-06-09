@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BringTheNight</string>
+    <string name="empresas">Empresas</string>
+    <string name="seguir">Seguir</string>
+    <string name="number">number</string>
+    <string name="seguidores">Seguidores</string>
+    <string name="criar">Criar</string>
+    <string name="titulo">Titulo</string>
+    <string name="criar_evento">Criar evento</string>
+    <string name="adiconar_imagem">Adiconar Imagem</string>
 </resources>
