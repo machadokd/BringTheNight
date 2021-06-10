@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        database= FirebaseDatabase.getInstance().getReference("users")
+        database = FirebaseDatabase.getInstance().getReference("users")
         userid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
         val postListener = object : ValueEventListener {
@@ -93,9 +93,11 @@ class MainActivity : AppCompatActivity() {
                         if(it.tipo == "empresa"){
                             val intent = Intent(this@MainActivity, FeedEmpresasActivity::class.java)
                             startActivity(intent)
+                            finish()
                         } else if (it.tipo == "user"){
                             val intent = Intent(this@MainActivity, FeedUsersActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                     }
                 }
