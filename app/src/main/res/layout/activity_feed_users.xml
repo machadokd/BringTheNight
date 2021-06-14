@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        android:id="@+id/idLLTopBar"
+        android:id="@+id/TopBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -27,7 +27,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/idTVAuthorName"
+            android:id="@+id/AuthorName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -43,7 +43,7 @@
         android:id="@+id/imagePost"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_below="@id/idLLTopBar"
+        android:layout_below="@id/TopBar"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/backgrounds/scenic"/>
