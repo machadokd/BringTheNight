@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
 
-//    CIRCULAR IMAGE
+//    CIRCULAR IMAGEM
     implementation 'com.mikhaellopez:circularimageview:4.3.0'
 
 //    MULTIDEX
