@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import ipvc.estg.bringthenight.models.Evento
+import ipvc.estg.bringthenight.models.User
 import kotlinx.android.synthetic.main.activity_criar_evento.*
 import java.util.*
 import kotlin.collections.HashMap
@@ -22,6 +24,7 @@ import kotlin.collections.HashMap
 class CriarEventoActivity : AppCompatActivity() {
 
     private lateinit var userId : String
+    private lateinit var user : String
     private lateinit var events : DatabaseReference
     private var image : Uri? = null
 
@@ -35,6 +38,14 @@ class CriarEventoActivity : AppCompatActivity() {
 
         userId = FirebaseAuth.getInstance().currentUser!!.uid
         events = FirebaseDatabase.getInstance().getReference("events")
+
+        FirebaseDatabase.getInstance().reference.child("users").child(userId).get().addOnSuccessListener {
+            Log.i("firebase_create_event", "Got value ${it.getValue(User::class.java)}")
+            user = it.getValue(User::class.java)!!.nome
+            Log.i("firebase_create_event", "Got value ${user}")
+        }.addOnFailureListener{
+            Log.e("firebase_create_event", "Error getting data", it)
+        }
 
         create_button.setOnClickListener {
             create_event()
@@ -73,7 +84,7 @@ class CriarEventoActivity : AppCompatActivity() {
             val filename = now.time.toString()
             val storageReference = FirebaseStorage.getInstance().getReference("images/$userId/$filename")
 
-            var evento = Evento(titulo = title.toString(), estabelecimento = userId, imagem = filename)
+            var evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user)
 
 
             events.push().setValue(evento).addOnSuccessListener {
