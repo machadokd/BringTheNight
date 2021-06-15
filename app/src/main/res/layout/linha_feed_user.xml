@@ -28,7 +28,7 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/AuthorName"
+            android:id="@+id/nome_empresa_feed_users"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -41,7 +41,7 @@
 
 
     <ImageView
-        android:id="@+id/imagePost"
+        android:id="@+id/imagem_evento_feed_users"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_below="@id/TopBar"
@@ -53,7 +53,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagePost"
+        android:layout_below="@id/imagem_evento_feed_users"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/ic_like" />
@@ -62,7 +62,7 @@
         android:id="@+id/Likes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagePost"
+        android:layout_below="@id/imagem_evento_feed_users"
         android:layout_marginTop="3dp"
         android:layout_marginLeft="25dp"
         android:layout_marginBottom="6dp"
@@ -74,20 +74,20 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagePost"
+        android:layout_below="@id/imagem_evento_feed_users"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="78dp"
         android:background="@drawable/ic_comment" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imagePost"
+        android:layout_below="@id/imagem_evento_feed_users"
         android:layout_marginTop="7dp"
         android:layout_marginLeft="120dp"
         android:background="@drawable/ic_share" />
 
     <TextView
-        android:id="@+id/PostDescricao"
+        android:id="@+id/descricao_evento_feed_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="dahdhahdaadhadiad dadjad ajfhadua asufhsa"
