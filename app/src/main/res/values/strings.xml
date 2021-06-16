@@ -8,4 +8,7 @@
     <string name="titulo">Titulo</string>
     <string name="criar_evento">Criar evento</string>
     <string name="adiconar_imagem">Adiconar Imagem</string>
+    <string name="editar_evento">Editar Evento</string>
+    <string name="editar">Editar</string>
+    <string name="trocar_imagem">Trocar Imagem</string>
 </resources>
