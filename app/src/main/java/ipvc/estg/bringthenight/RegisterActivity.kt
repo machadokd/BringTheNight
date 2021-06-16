@@ -156,26 +156,32 @@ class RegisterActivity : AppCompatActivity() {
 
                         var hashMap : HashMap<String, Any> = HashMap()
 
-                        val now = Date()
-                        val filename = now.time.toString()
-
                         hashMap.put("id", userid)
                         hashMap.put("email", email)
                         hashMap.put("nome", nome)
                         hashMap.put("tipo", tipo)
-                        hashMap.put("morada", morada)
-                        hashMap.put("imagem", filename)
-                        hashMap.put("latitude", lat!!.toDouble())
-                        hashMap.put("longitude", long!!.toDouble())
 
+                        if (!lat.isNullOrBlank() && !long.isNullOrBlank()){
+                            hashMap.put("morada", morada)
+                            hashMap.put("latitude", lat!!.toDouble())
+                            hashMap.put("longitude", long!!.toDouble())
+                        }
 
-                        val storageReference = FirebaseStorage.getInstance().getReference("images/$userid/perfil/$filename")
+                        if (image != null){
 
-                        storageReference.putFile(image!!).addOnSuccessListener {
-                            Toast.makeText(this, "Imagem Carregada.", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }.addOnFailureListener {
-                            Toast.makeText(this, "Falhou a dar upload da imagem.", Toast.LENGTH_SHORT).show()
+                            val now = Date()
+                            val filename = now.time.toString()
+
+                            hashMap.put("imagem", filename)
+
+                            val storageReference = FirebaseStorage.getInstance().getReference("images/$userid/perfil/$filename")
+
+                            storageReference.putFile(image!!).addOnSuccessListener {
+                                Toast.makeText(this, "Imagem Carregada.", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }.addOnFailureListener {
+                                Toast.makeText(this, "Falhou a dar upload da imagem.", Toast.LENGTH_SHORT).show()
+                            }
                         }
 
                         val ref : DatabaseReference = FirebaseDatabase.getInstance().getReference().child(

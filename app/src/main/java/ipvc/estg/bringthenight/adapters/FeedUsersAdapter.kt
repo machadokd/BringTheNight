@@ -46,13 +46,14 @@ class FeedUsersAdapter internal constructor(
         holder.nome.text = current.nome_establecimento
 
         val storageRef = FirebaseStorage.getInstance().getReference("images/${current.estabelecimento}/${current.imagem}")
-        val localFile = File.createTempFile("temp_file", "png")
+        val localFile = File.createTempFile("temp_file", ".png")
         var bitmap: Bitmap? = null
 
         storageRef.getFile(localFile).addOnSuccessListener {
             bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
             Log.i("firebase_image", "Image $it")
             holder.imagem.setImageBitmap(bitmap!!)
+            Log.i("file_download_recycler", "${ holder.imagem }")
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
