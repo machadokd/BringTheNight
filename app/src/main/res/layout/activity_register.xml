@@ -117,6 +117,17 @@
         app:layout_constraintTop_toBottomOf="@+id/morada_empresa_registo"
         tools:layout_editor_absoluteY="326dp" />
 
+    <ImageView
+        android:id="@+id/imagem_empresa_registo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/informacao_morada_empresa"
+        android:background="@color/teal_200"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

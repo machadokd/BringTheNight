@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import ipvc.estg.bringthenight.adapters.FeedUsersAdapter
-import ipvc.estg.bringthenight.entities.Event
+import ipvc.estg.bringthenight.models.Evento
 import kotlinx.android.synthetic.main.activity_feed_users.*
 
 class FeedUsersActivity : AppCompatActivity() {
@@ -26,7 +26,7 @@ class FeedUsersActivity : AppCompatActivity() {
     private fun readEventos(){
         database = FirebaseDatabase.getInstance().getReference("events")
 
-        val eventos : MutableList<Event> = ArrayList()
+        val eventos : MutableList<Evento> = ArrayList()
         eventos.clear()
 
         val postListener = object : ValueEventListener {
@@ -37,12 +37,12 @@ class FeedUsersActivity : AppCompatActivity() {
             override fun onDataChange(p0: DataSnapshot) {
                 val children = p0!!.children
                 children.forEach{
-                    eventos.add(it.getValue(Event::class.java)!!)
+                    eventos.add(it.getValue(Evento::class.java)!!)
                 }
 
                 RecyclerFeedUser.apply{
                     layoutManager = LinearLayoutManager(this@FeedUsersActivity)
-                    adapter = FeedUsersAdapter(this@FeedUsersActivity, eventos as ArrayList<Event>)
+                    adapter = FeedUsersAdapter(this@FeedUsersActivity, eventos as ArrayList<Evento>)
                 }
 
 
