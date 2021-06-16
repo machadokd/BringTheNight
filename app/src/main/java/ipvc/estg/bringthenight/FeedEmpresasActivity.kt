@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +41,8 @@ class FeedEmpresasActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_logout)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
         userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -70,5 +74,46 @@ class FeedEmpresasActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.empresa_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        android.R.id.home -> {
+            logout()
+            true
+        }
+
+        R.id.map -> {
+            toEventMapActivity()
+            true
+        }
+
+        R.id.chat -> {
+            toChatEmpresaActivity()
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun toChatEmpresaActivity() {
+        val intent = Intent(this@FeedEmpresasActivity, ChatEmpresaActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun toEventMapActivity() {
+        val intent = Intent(this@FeedEmpresasActivity, EventMapActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun logout() {
+        FirebaseAuth.getInstance().signOut()
+        val intent = Intent(this@FeedEmpresasActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
