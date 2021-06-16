@@ -15,11 +15,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.mikhaellopez.circularimageview.CircularImageView
+import com.squareup.picasso.Picasso
 import ipvc.estg.bringthenight.R
 import ipvc.estg.bringthenight.models.Empresa
 import ipvc.estg.bringthenight.models.Evento
 import kotlinx.android.synthetic.main.activity_criar_evento.*
-import java.io.File
+import java.io.*
 
 class FeedUsersAdapter internal constructor(
     var context: Context, private val events: List<Evento>
@@ -53,6 +54,7 @@ class FeedUsersAdapter internal constructor(
             bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
             Log.i("firebase_image", "Image $it")
             holder.imagem.setImageBitmap(bitmap!!)
+            Log.i("file_download_recycler", "${ holder.imagem }")
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
@@ -70,7 +72,11 @@ class FeedUsersAdapter internal constructor(
             storageRef2.getFile(localFile2).addOnSuccessListener {
                 bitmap2 = BitmapFactory.decodeFile(localFile2.absolutePath)
                 Log.i("firebase_image", "Image $it")
-                holder.imagemPerfil.setImageBitmap(bitmap2!!)
+
+                val file : File = convertBitmapToFile("file", bitmap2!!)
+
+
+                Picasso.get().load(file).rotate(90f).into(holder.imagemPerfil);
             }.addOnFailureListener {
                 Log.e("firebase", "Error getting data", it)
             }
@@ -83,4 +89,34 @@ class FeedUsersAdapter internal constructor(
     }
 
     override fun getItemCount() = events.size
+
+    private fun convertBitmapToFile(fileName: String, bitmap: Bitmap): File {
+        //create a file to write bitmap data
+        val file = File(context.cacheDir, fileName)
+        file.createNewFile()
+
+        //Convert bitmap to byte array
+        val bos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, bos)
+        val bitMapData = bos.toByteArray()
+
+        //write the bytes in file
+        var fos: FileOutputStream? = null
+        try {
+            fos = FileOutputStream(file)
+        } catch (e: FileNotFoundException) {
+            e.printStackTrace()
+        }
+        try {
+            fos?.write(bitMapData)
+            fos?.flush()
+            fos?.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return file
+    }
+
+
+
 }
