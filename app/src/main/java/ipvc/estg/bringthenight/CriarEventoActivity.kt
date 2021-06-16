@@ -1,6 +1,8 @@
 package ipvc.estg.bringthenight
 
+import android.app.DatePickerDialog
 import android.app.Instrumentation
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
@@ -8,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.DatePicker
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_criar_evento.*
 import java.util.*
 import kotlin.collections.HashMap
 
-class CriarEventoActivity : AppCompatActivity() {
+class CriarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private lateinit var userId : String
     private lateinit var user : String
@@ -31,6 +35,21 @@ class CriarEventoActivity : AppCompatActivity() {
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         onActivityResult(PICK_IMAGE, result)
     }
+
+    var day = 0
+    var month = 0
+    var year = 0
+    var hour = 0
+    var minute = 0
+
+    var savedDay = 0
+    var savedMonth = 0
+    var savedYear = 0
+    var savedHour = 0
+    var savedMinute = 0
+
+    private var date : Date? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +74,10 @@ class CriarEventoActivity : AppCompatActivity() {
             load_image()
         }
 
+        date_picker_button.setOnClickListener {
+            pick_date()
+        }
+
     }
 
     private fun load_image() {
@@ -69,12 +92,10 @@ class CriarEventoActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun create_event() {
         val title = title_edit_text.text
 
-        if (!title.isNullOrBlank() && image != null){
+        if (!title.isNullOrBlank() && image != null && date != null){
 
             val now = Date()
             val filename = now.time.toString()
@@ -82,8 +103,7 @@ class CriarEventoActivity : AppCompatActivity() {
 
             val key = events.push().key
 
-            val evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user, id = key!!)
-
+            val evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user, id = key!!, date = date!!)
 
 
             events.child(key).setValue(evento).addOnSuccessListener {
@@ -108,5 +128,38 @@ class CriarEventoActivity : AppCompatActivity() {
 
     companion object {
         private const val PICK_IMAGE = 100
+    }
+
+    private fun getDateTimeCalendar(){
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+        hour = cal.get(Calendar.HOUR)
+        minute = cal.get(Calendar.MINUTE)
+    }
+
+    private fun pick_date() {
+        getDateTimeCalendar()
+        DatePickerDialog(this, this, year, month, day).show()
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        savedDay = dayOfMonth
+        savedMonth = month
+        savedYear = year
+
+        getDateTimeCalendar()
+        TimePickerDialog(this, this, hour, minute, true).show()
+    }
+
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        savedHour = hourOfDay
+        savedMinute = minute
+
+        date = Date(savedYear-1900, savedMonth, savedDay, savedHour, savedMinute)
+
+        dateTextView.text = date!!.toLocaleString()
+
     }
 }

@@ -1,5 +1,7 @@
 package ipvc.estg.bringthenight
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -9,6 +11,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.DatePicker
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,21 +28,34 @@ import kotlinx.android.synthetic.main.empresa_post.view.*
 import java.io.File
 import java.util.*
 
-class EditarEventoActivity : AppCompatActivity() {
+class EditarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     
     private lateinit var db_reference : DatabaseReference
     private lateinit var evento: Evento
+    private var data : Date? = null
 
     private var image : Uri? = null
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         onActivityResult(PICK_IMAGE, result)
     }
 
+    var day = 0
+    var month = 0
+    var year = 0
+    var hour = 0
+    var minute = 0
+
+    var savedDay = 0
+    var savedMonth = 0
+    var savedYear = 0
+    var savedHour = 0
+    var savedMinute = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_evento)
 
-        var id_evento = intent.getStringExtra("evento")
+        val id_evento = intent.getStringExtra("evento")
         
         db_reference = FirebaseDatabase.getInstance().reference.child("events").child(id_evento!!)
 
@@ -47,6 +64,8 @@ class EditarEventoActivity : AppCompatActivity() {
             evento = it.getResult()!!.getValue(Evento::class.java)!!
             Log.i("editar_evento", "evento ${evento}")
             title_edit_text.setText(evento.titulo)
+            dateEditTextView.text = evento.date.toLocaleString()
+            data = evento.date
 
             val storageRef = FirebaseStorage.getInstance().getReference("images/${evento.estabelecimento}/${evento.imagem}")
             val localFile = File.createTempFile("temp_file", "png")
@@ -69,6 +88,9 @@ class EditarEventoActivity : AppCompatActivity() {
 
         edit_button.setOnClickListener { edit_event() }
 
+        date_picker_button_edit.setOnClickListener {
+            pick_date()
+        }
         
 
     }
@@ -91,13 +113,14 @@ class EditarEventoActivity : AppCompatActivity() {
     private fun edit_event() {
         val title = title_edit_text.text
 
-        if (!title.isNullOrBlank()){
+        if (!title.isNullOrBlank() && data != null){
 
             val storageReference = FirebaseStorage.getInstance().getReference("images/${evento.estabelecimento}/${evento.imagem}")
 
 
             evento.apply {
                 titulo = title.toString()!!
+                date = data as Date
             }
 
 
@@ -129,5 +152,38 @@ class EditarEventoActivity : AppCompatActivity() {
         private const val PICK_IMAGE = 100
     }
 
+
+    private fun getDateTimeCalendar(){
+        val cal = Calendar.getInstance()
+        day = cal.get(Calendar.DAY_OF_MONTH)
+        month = cal.get(Calendar.MONTH)
+        year = cal.get(Calendar.YEAR)
+        hour = cal.get(Calendar.HOUR)
+        minute = cal.get(Calendar.MINUTE)
+    }
+
+    private fun pick_date() {
+        getDateTimeCalendar()
+        DatePickerDialog(this, this, year, month, day).show()
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        savedDay = dayOfMonth
+        savedMonth = month
+        savedYear = year
+
+        getDateTimeCalendar()
+        TimePickerDialog(this, this, hour, minute, true).show()
+    }
+
+    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+        savedHour = hourOfDay
+        savedMinute = minute
+
+        data = Date(savedYear-1900, savedMonth, savedDay, savedHour, savedMinute)
+
+        dateEditTextView.text = data!!.toLocaleString()
+
+    }
 
 }

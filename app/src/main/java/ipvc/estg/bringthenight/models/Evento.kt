@@ -11,7 +11,7 @@ data class Evento(
     val imagem : String = "",
     val longitude : Double = 0.0,
     val latitude : Double = 0.0,
-    val date : Date = Date(),
+    var date : Date = Date(),
     val id : String = ""
 
     )
