@@ -32,8 +32,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".MapaRegistoActivity"
+            android:label="@string/title_activity_mapa_registo"></activity>
+        <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
         <activity android:name=".EditarEventoActivity" />
         <activity android:name=".CriarEventoActivity" />
         <activity android:name=".FeedEmpresasActivity" />
