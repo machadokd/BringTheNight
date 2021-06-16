@@ -11,4 +11,5 @@
     <string name="editar_evento">Editar Evento</string>
     <string name="editar">Editar</string>
     <string name="trocar_imagem">Trocar Imagem</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
