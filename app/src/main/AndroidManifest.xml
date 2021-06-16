@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BringTheNight">
-        <activity android:name=".CriarEventoActivity"></activity>
+        <activity android:name=".EditarEventoActivity"></activity>
+        <activity android:name=".CriarEventoActivity" />
         <activity android:name=".FeedEmpresasActivity" />
         <activity android:name=".FeedUsersActivity" />
         <activity android:name=".RegisterActivity" />

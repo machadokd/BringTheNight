@@ -36,6 +36,23 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+        if(FirebaseAuth.getInstance().currentUser != null){
+            val id = FirebaseAuth.getInstance().currentUser!!.uid
+            FirebaseDatabase.getInstance().reference.child("users").child(id).get().addOnSuccessListener {
+                Log.i("firebase", "Got value ${it.getValue(User::class.java)}")
+                val user = it.getValue(User::class.java)
+                if (user!!.tipo == "empresa"){
+                    val intent = Intent(this@MainActivity, FeedEmpresasActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }.addOnFailureListener{
+                Log.e("firebase", "Error getting data", it)
+            }
+
+        }
+
     }
 
     public override fun onStart() {

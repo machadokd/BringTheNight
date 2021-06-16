@@ -59,14 +59,10 @@ class CriarEventoActivity : AppCompatActivity() {
 
     private fun load_image() {
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-
         resultLauncher.launch(gallery)
-
-//        startActivityForResult(gallery, 100)
     }
 
     private fun onActivityResult(requestCode: Int, result: ActivityResult) {
-//        super.onActivityResult(requestCode, resultCode, data)
         if (result.resultCode == RESULT_OK && requestCode == PICK_IMAGE){
             image = result.data?.data!!
             imageView.setImageURI(image)
@@ -84,10 +80,14 @@ class CriarEventoActivity : AppCompatActivity() {
             val filename = now.time.toString()
             val storageReference = FirebaseStorage.getInstance().getReference("images/$userId/$filename")
 
-            var evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user)
+            val key = events.push().key
+
+            val evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user, id = key!!)
 
 
-            events.push().setValue(evento).addOnSuccessListener {
+
+            events.child(key).setValue(evento).addOnSuccessListener {
+
                 storageReference.putFile(image!!).addOnSuccessListener {
                     Toast.makeText(this, "Imagem Carregada.", Toast.LENGTH_SHORT).show()
                     finish()
