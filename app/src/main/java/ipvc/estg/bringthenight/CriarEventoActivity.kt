@@ -1,10 +1,10 @@
 package ipvc.estg.bringthenight
 
+import android.app.Activity
 import android.app.DatePickerDialog
-import android.app.Instrumentation
 import android.app.TimePickerDialog
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
+import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,17 +13,15 @@ import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import ipvc.estg.bringthenight.models.Empresa
 import ipvc.estg.bringthenight.models.Evento
 import ipvc.estg.bringthenight.models.User
 import kotlinx.android.synthetic.main.activity_criar_evento.*
 import java.util.*
-import kotlin.collections.HashMap
 
 class CriarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
@@ -32,9 +30,14 @@ class CriarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
     private lateinit var events : DatabaseReference
     private var image : Uri? = null
 
-    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        onActivityResult(PICK_IMAGE, result)
-    }
+    private var latitude : Double? = null
+    private var longitude : Double? = null
+
+    private val newWordActivityRequestCode = 1
+
+//    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        onActivityResult(PICK_IMAGE, result)
+//    }
 
     var day = 0
     var month = 0
@@ -60,7 +63,13 @@ class CriarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
         FirebaseDatabase.getInstance().reference.child("users").child(userId).get().addOnSuccessListener {
             Log.i("firebase_create_event", "Got value ${it.getValue(User::class.java)}")
-            user = it.getValue(User::class.java)!!.nome
+            user = it.getValue(Empresa::class.java)!!.nome
+            latitude = it.getValue(Empresa::class.java)!!.latitude
+            longitude = it.getValue(Empresa::class.java)!!.longitude
+
+            val address = getAddress(latitude!!, longitude!!)
+            locationTextView.text = address
+
             Log.i("firebase_create_event", "Got value ${user}")
         }.addOnFailureListener{
             Log.e("firebase_create_event", "Error getting data", it)
@@ -78,16 +87,37 @@ class CriarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
             pick_date()
         }
 
+        location.setOnClickListener{
+            val intent = Intent(this@CriarEventoActivity, MapsActivityCreateEvent::class.java)
+            startActivityForResult(intent, newWordActivityRequestCode)
+        }
+
+    }
+
+    private fun getAddress(lat :Double, long: Double):String?{
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, long, 1)
+        return list[0].getAddressLine(0)
     }
 
     private fun load_image() {
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
-        resultLauncher.launch(gallery)
+        startActivityForResult(gallery, PICK_IMAGE)
     }
 
-    private fun onActivityResult(requestCode: Int, result: ActivityResult) {
-        if (result.resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            image = result.data?.data!!
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            latitude = data?.getStringExtra(MapsActivityCreateEvent.EXTRA_REPLY_LAT)!!.toDouble()
+            longitude = data?.getStringExtra(MapsActivityCreateEvent.EXTRA_REPLY_LONG)!!.toDouble()
+
+            val address = getAddress(latitude!!.toDouble(), longitude!!.toDouble())
+//            val morada= findViewById<EditText>(R.id.morada_empresa_registo)
+            locationTextView.text = address
+        } else if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK){
+            image = data!!.data!!
             imageView.setImageURI(image)
         }
     }
@@ -103,7 +133,12 @@ class CriarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListe
 
             val key = events.push().key
 
-            val evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user, id = key!!, date = date!!)
+            var evento = Evento(titulo = title.toString(), estabelecimento = userId,  imagem = filename, nome_establecimento = user, id = key!!, date = date!!)
+
+            if (longitude != null && latitude != null) {
+                evento.latitude = latitude!!.toDouble()
+                evento.longitude = longitude!!.toDouble()
+            }
 
 
             events.child(key).setValue(evento).addOnSuccessListener {

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".CriarEventoActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
     <Button
         android:id="@+id/edit_button"
         android:layout_width="wrap_content"
@@ -56,18 +66,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_image"
         tools:src="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/edit_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/trocar_imagem"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationEditTextView" />
 
     <Button
         android:id="@+id/date_picker_button_edit"
@@ -88,5 +99,24 @@
         android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date_picker_button_edit" />
+
+    <Button
+        android:id="@+id/locationEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/nova_localizacao"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dateEditTextView" />
+
+    <TextView
+        android:id="@+id/locationEditTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/locationEdit"
+        app:layout_constraintTop_toBottomOf="@+id/locationEdit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
