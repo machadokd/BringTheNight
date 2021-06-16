@@ -14,4 +14,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="data">Data</string>
     <string name="title_activity_mapa_registo">Map</string>
+    <string name="nova_localizacao">Nova Localização</string>
 </resources>

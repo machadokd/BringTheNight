@@ -1,24 +1,25 @@
 package ipvc.estg.bringthenight
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import ipvc.estg.bringthenight.models.Empresa
 import ipvc.estg.bringthenight.models.Evento
 import kotlinx.android.synthetic.main.activity_criar_evento.*
 import kotlinx.android.synthetic.main.activity_criar_evento.imageView
@@ -35,9 +36,11 @@ class EditarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private var data : Date? = null
 
     private var image : Uri? = null
-    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        onActivityResult(PICK_IMAGE, result)
-    }
+//    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//        onActivityResult(PICK_IMAGE, result)
+//    }
+
+    private val newWordActivityRequestCode = 1
 
     var day = 0
     var month = 0
@@ -67,6 +70,9 @@ class EditarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             dateEditTextView.text = evento.date.toLocaleString()
             data = evento.date
 
+            val address = getAddress(evento.latitude, evento.longitude)
+            locationEditTextView.text = address
+
             val storageRef = FirebaseStorage.getInstance().getReference("images/${evento.estabelecimento}/${evento.imagem}")
             val localFile = File.createTempFile("temp_file", "png")
             var bitmap: Bitmap? = null
@@ -91,24 +97,44 @@ class EditarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         date_picker_button_edit.setOnClickListener {
             pick_date()
         }
+
+        locationEdit.setOnClickListener{
+            val intent = Intent(this@EditarEventoActivity, MapsActivityEditEvent::class.java)
+            startActivityForResult(intent, newWordActivityRequestCode)
+        }
         
 
+    }
+
+    private fun getAddress(lat :Double, long: Double):String?{
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, long, 1)
+        return list[0].getAddressLine(0)
     }
 
     private fun load_image() {
         val gallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
 
-        resultLauncher.launch(gallery)
+//        resultLauncher.launch(gallery)
+        startActivityForResult(gallery, PICK_IMAGE)
 
     }
 
-    private fun onActivityResult(requestCode: Int, result: ActivityResult) {
-//        super.onActivityResult(requestCode, resultCode, data)
-        if (result.resultCode == RESULT_OK && requestCode == PICK_IMAGE){
-            image = result.data?.data!!
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            evento.latitude = data?.getStringExtra(MapsActivityEditEvent.EXTRA_REPLY_LAT)!!.toDouble()
+            evento.longitude = data?.getStringExtra(MapsActivityEditEvent.EXTRA_REPLY_LONG)!!.toDouble()
+
+            val address = getAddress(evento.latitude, evento.longitude)
+            locationEditTextView.text = address
+        } else if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK){
+            image = data!!.data!!
             imageView.setImageURI(image)
         }
     }
+
 
     private fun edit_event() {
         val title = title_edit_text.text
@@ -122,7 +148,6 @@ class EditarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                 titulo = title.toString()!!
                 date = data as Date
             }
-
 
 
             db_reference.setValue(evento).addOnSuccessListener {

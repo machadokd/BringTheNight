@@ -39,6 +39,8 @@ class FeedEmpresasActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
         userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
         events = FirebaseDatabase.getInstance().reference.child("events")
