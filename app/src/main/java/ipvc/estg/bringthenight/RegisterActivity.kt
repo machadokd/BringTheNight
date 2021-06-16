@@ -1,6 +1,9 @@
 package ipvc.estg.bringthenight
 
+import android.app.Activity
 import android.content.ContentValues
+import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -10,19 +13,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import org.w3c.dom.Text
 
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private val newWordActivityRequestCode = 1
 
-    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         auth = FirebaseAuth.getInstance()
-
 
 
         val button = findViewById<Button>(R.id.button_registo)
@@ -48,7 +51,38 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
+        val info_morada = findViewById<TextView>(R.id.informacao_morada_empresa)
+        info_morada.setOnClickListener{
+            val intent = Intent(this@RegisterActivity, MapaRegistoActivity::class.java)
+            startActivityForResult(intent, newWordActivityRequestCode)
+        }
+
     }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == newWordActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            val lat = data?.getStringExtra(MapaRegistoActivity.EXTRA_REPLY_LAT)
+            val long = data?.getStringExtra(MapaRegistoActivity.EXTRA_REPLY_LONG)
+
+            val address = getAddress(lat!!.toDouble(), long!!.toDouble())
+            val morada= findViewById<EditText>(R.id.morada_empresa_registo)
+            morada.setText(address)
+        } else {
+
+        }
+    }
+
+
+    private fun getAddress(lat :Double, long: Double):String?{
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, long, 1)
+        return list[0].getAddressLine(0)
+    }
+
 
     private fun createAccount() {
         val email = findViewById<EditText>(R.id.email_registo).text.toString()
@@ -129,6 +163,12 @@ class RegisterActivity : AppCompatActivity() {
 
         val nome_empresa = findViewById<EditText>(R.id.nome_empresa_registo)
         nome_empresa.visibility = EditText.VISIBLE
+
+        val morada_empresa = findViewById<EditText>(R.id.morada_empresa_registo)
+        morada_empresa.visibility = EditText.VISIBLE
+
+        val info_morada = findViewById<TextView>(R.id.informacao_morada_empresa)
+        info_morada.visibility = TextView.VISIBLE
     }
 
     private fun clickRadioUser(){
@@ -137,6 +177,12 @@ class RegisterActivity : AppCompatActivity() {
 
         val nickname = findViewById<EditText>(R.id.nickname_registo)
         nickname.visibility = EditText.VISIBLE
+
+        val morada_empresa = findViewById<EditText>(R.id.morada_empresa_registo)
+        morada_empresa.visibility = EditText.GONE
+
+        val info_morada = findViewById<TextView>(R.id.informacao_morada_empresa)
+        info_morada.visibility = TextView.GONE
     }
 
 

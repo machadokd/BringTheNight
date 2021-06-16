@@ -62,4 +62,12 @@ dependencies {
 
 //    MULTIDEX
     implementation 'androidx.multidex:multidex:2.0.1'
+
+    //MAPA
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    
 }
