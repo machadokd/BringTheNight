@@ -75,6 +75,8 @@ class VerMaisEventoActivity : AppCompatActivity() {
             var like_ref = FirebaseDatabase.getInstance().getReference("gostos/${id_user}/${id_evento}")
             like_ref.get().addOnCompleteListener {
                 toggle_like.isChecked = it.result.value as Boolean
+            }.addOnFailureListener {
+                Log.e("firebase", "Error getting data", it)
             }
 
 

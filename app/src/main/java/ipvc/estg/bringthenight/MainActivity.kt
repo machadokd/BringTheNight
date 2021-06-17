@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        updateUI(currentUser)
+        //updateUI(currentUser)
     }
-
+ /*
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             FirebaseDatabase.getInstance().reference.child("users").child(user.uid).get().addOnCompleteListener {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
+*/
     private fun startSignIn() {
         val email = findViewById<EditText>(R.id.email_login).text.toString()
         val password = findViewById<EditText>(R.id.pass_login).text.toString()

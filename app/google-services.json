@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "821168731530",
-    "firebase_url": "https://bringthenight-d8c64-default-rtdb.firebaseio.com",
-    "project_id": "bringthenight-d8c64",
-    "storage_bucket": "bringthenight-d8c64.appspot.com"
+    "project_number": "781055907040",
+    "project_id": "bringthenifh",
+    "storage_bucket": "bringthenifh.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:821168731530:android:009d54a1c7bfc8869cc473",
+        "mobilesdk_app_id": "1:781055907040:android:baacb6a6aed7026d1f6c85",
         "android_client_info": {
           "package_name": "ipvc.estg.bringthenight"
         }
       },
       "oauth_client": [
         {
-          "client_id": "821168731530-kt7ksiu3u8t0ivum85slm6o4hsfq4lht.apps.googleusercontent.com",
+          "client_id": "781055907040-vl7413foiakqt8hhhg9kdcucvlikdql2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBLx7IbqmgM2H74_UOTFbqGHq5tuQ5y0RY"
+          "current_key": "AIzaSyC-BX22dgjEok7EF8x5q4gWoLZCPJ4Qc2U"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "821168731530-kt7ksiu3u8t0ivum85slm6o4hsfq4lht.apps.googleusercontent.com",
+              "client_id": "781055907040-vl7413foiakqt8hhhg9kdcucvlikdql2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
