@@ -35,7 +35,7 @@ class FeedUsersAdapter internal constructor(
         val nome : TextView = itemView.findViewById(R.id.nome_empresa_feed_users)
         val imagem : ImageView = itemView.findViewById(R.id.imagem_evento_feed_users)
         val imagemPerfil : CircularImageView = itemView.findViewById(R.id.imagem_perfil_empresa_feed_users)
-        val like : ImageView= itemView.findViewById(R.id.likes_evento_feed_user)
+//        val like : ImageView= itemView.findViewById(R.id.likes_evento_feed_user)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedUsersHolder {
@@ -52,9 +52,9 @@ class FeedUsersAdapter internal constructor(
         val storageRef = FirebaseStorage.getInstance().getReference("images/${current.estabelecimento}/${current.imagem}")
         val localFile = File.createTempFile("temp_file", "png")
         var bitmap: Bitmap? = null
-        holder.like.setOnClickListener {
-            daLike(current.id, holder.like)
-        }
+//        holder.like.setOnClickListener {
+//            daLike(current.id, holder.like)
+//        }
 
         storageRef.getFile(localFile).addOnSuccessListener {
             bitmap = BitmapFactory.decodeFile(localFile.absolutePath)
@@ -72,7 +72,7 @@ class FeedUsersAdapter internal constructor(
         ref.child("events").child(current.id).get().addOnSuccessListener {
             if (it.hasChild("gostos")){
                 if(it.child("gostos").hasChild(user.uid)){
-                    holder.like.setBackgroundResource(R.drawable.ic_liked)
+//                    holder.like.setBackgroundResource(R.drawable.ic_liked)
                 }
             }
         }

@@ -17,16 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <ImageView
-        android:id="@+id/likes_evento_ver_mais"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imagem_evento_feed_users"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/ic_like"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagem_evento_ver_mais" />
+<!--    <ImageView-->
+<!--        android:id="@+id/likes_evento_ver_mais"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/imagem_evento_feed_users"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:background="@drawable/ic_like"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imagem_evento_ver_mais" />-->
 
     <TextView
         android:id="@+id/likes_descricao_evento_ver_mais"
@@ -39,7 +39,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.021"
-        app:layout_constraintStart_toEndOf="@+id/likes_evento_ver_mais"
+        app:layout_constraintStart_toEndOf="@+id/toggle_like"
         app:layout_constraintTop_toBottomOf="@+id/imagem_evento_ver_mais" />
 
     <ImageView
@@ -62,5 +62,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imagem_evento_ver_mais" />
+
+    <ToggleButton
+        android:id="@+id/toggle_like"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="12dp"
+        android:textOff=""
+        android:textOn=""
+        android:background="@drawable/like_toggle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagem_evento_ver_mais"
+        android:layout_marginStart="24dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

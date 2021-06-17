@@ -1,6 +1,7 @@
 package ipvc.estg.bringthenight.models
 
 import com.google.firebase.database.IgnoreExtraProperties
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.collections.HashMap
 

@@ -27,9 +27,6 @@ class FeedEmpresasActivity : AppCompatActivity() {
 //    EVENT LIST
     private var org_events : MutableList<Evento> = ArrayList()
 
-//    LISTENER
-    private lateinit var eventListener: ValueEventListener
-
     private lateinit var postAdapter: PostAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
