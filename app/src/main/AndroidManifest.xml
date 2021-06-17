@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BringTheNight">
         <activity android:name=".VerMaisEventoActivity"></activity>
+        <activity android:name=".PerfilEmpresaUserActivity"></activity>
         <activity android:name=".models.ChatWindowActivity" />
         <activity android:name=".UserNewChatActivity" />
         <activity android:name=".ChatUserActivity" />

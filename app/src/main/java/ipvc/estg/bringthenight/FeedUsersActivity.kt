@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import ipvc.estg.bringthenight.adapters.FeedUsersAdapter
 import ipvc.estg.bringthenight.models.Evento
+import ipvc.estg.bringthenight.models.User
 import kotlinx.android.synthetic.main.activity_feed_users.*
 
 class FeedUsersActivity : AppCompatActivity() {

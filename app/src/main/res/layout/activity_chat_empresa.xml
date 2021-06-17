@@ -7,6 +7,7 @@
     tools:context=".ChatEmpresaActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_empresa_latest_messages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
