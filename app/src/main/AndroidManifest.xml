@@ -46,6 +46,11 @@
         <activity
             android:name=".MapsActivityCreateEvent"
             android:label="@string/title_activity_maps" />
+
+        <activity
+            android:name=".MapsActivityEditEvent"
+            android:label="@string/title_activity_maps" />
+
         <activity android:name=".EditarEventoActivity" />
         <activity android:name=".CriarEventoActivity" />
         <activity android:name=".FeedEmpresasActivity" />

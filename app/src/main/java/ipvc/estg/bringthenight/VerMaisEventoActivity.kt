@@ -15,6 +15,8 @@ import ipvc.estg.bringthenight.models.Evento
 import kotlinx.android.synthetic.main.activity_ver_mais_evento.*
 import kotlinx.android.synthetic.main.linha_feed_user.view.*
 import java.io.File
+import java.lang.Exception
+import java.lang.NullPointerException
 
 class VerMaisEventoActivity : AppCompatActivity() {
 
@@ -72,12 +74,20 @@ class VerMaisEventoActivity : AppCompatActivity() {
                 Log.e("firebase", "Error getting data", it)
             }
 
-            var like_ref = FirebaseDatabase.getInstance().getReference("gostos/${id_user}/${id_evento}")
-            like_ref.get().addOnCompleteListener {
-                toggle_like.isChecked = it.result.value as Boolean
-            }.addOnFailureListener {
-                Log.e("firebase", "Error getting data", it)
-            }
+                var like_ref = FirebaseDatabase.getInstance().getReference("gostos/${id_user}/${id_evento}")
+                like_ref.get().addOnCompleteListener {
+                    try {
+                        toggle_like.isChecked = it.result.value as Boolean
+                    }catch (err : NullPointerException){
+                        Log.e("erro",err.toString())
+                    }
+                }.addOnFailureListener {
+                    Log.e("firebase", "Error getting data", it)
+                }
+
+
+
+
 
 
 

@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        //updateUI(currentUser)
+        updateUI(currentUser)
     }
- /*
+
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             FirebaseDatabase.getInstance().reference.child("users").child(user.uid).get().addOnCompleteListener {
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-*/
+
     private fun startSignIn() {
         val email = findViewById<EditText>(R.id.email_login).text.toString()
         val password = findViewById<EditText>(R.id.pass_login).text.toString()
@@ -83,13 +83,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "Authentication success.",
                         Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
-                    // updateUI(user)
+                     updateUI(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    //updateUI(null)
+                    updateUI(null)
                 }
             }
 
