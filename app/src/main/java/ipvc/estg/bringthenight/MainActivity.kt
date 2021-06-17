@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             FirebaseDatabase.getInstance().reference.child("users").child(user.uid).get().addOnCompleteListener {
+                Log.i("runtime_error_te", "updateUI: ${it}")
                 val temp_user = it.result.getValue(User::class.java)
                 if (temp_user != null) {
                     if (temp_user!!.tipo == "empresa"){

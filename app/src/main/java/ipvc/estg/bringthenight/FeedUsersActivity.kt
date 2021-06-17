@@ -49,11 +49,16 @@ class FeedUsersActivity : AppCompatActivity() {
 //        }
 //
         R.id.chat -> {
-//            toChatEmpresaActivity()
+            toChatUserActivity()
             true
         }
 
         else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun toChatUserActivity() {
+        val intent = Intent(this@FeedUsersActivity, ChatUserActivity::class.java)
+        startActivity(intent)
     }
 
     private fun logout() {
