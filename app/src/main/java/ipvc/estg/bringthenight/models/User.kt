@@ -6,8 +6,10 @@ import kotlinx.android.parcel.Parcelize
 
 @IgnoreExtraProperties
 @Parcelize
-data class User(val id: String = "",
-                val nome:String = "",
-                val email: String = "",
-                val tipo: String = ""
-                ) : Parcelable
+data class User(
+    val id: String = "",
+    val nome:String = "",
+    val email: String = "",
+    val tipo: String = "",
+    val imagem: String = ""
+) : Parcelable
