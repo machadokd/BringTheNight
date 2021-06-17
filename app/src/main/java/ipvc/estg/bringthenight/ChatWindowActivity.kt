@@ -51,7 +51,7 @@ class ChatWindowActivity : AppCompatActivity() {
     }
 
     private fun listenForMessages() {
-        val ref = FirebaseDatabase.getInstance().getReference("messages")
+        val ref = FirebaseDatabase.getInstance().getReference("user-messages/${fromId}/${toId}")
 
         ref.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -61,7 +61,7 @@ class ChatWindowActivity : AppCompatActivity() {
                 if (chatMessage != null) {
                     if (chatMessage.fromId == fromId){
                         adapter.add(ChatToItem(chatMessage.message))
-                    }else if (chatMessage.toId == toId){
+                    }else {
                         adapter.add(ChatFromItem(chatMessage.message))
                     }
                 }
@@ -89,13 +89,23 @@ class ChatWindowActivity : AppCompatActivity() {
         val message = message_edit_text.text.toString()
 
         if (!message.isNullOrBlank() && fromId != null && toId != null){
-            val reference = FirebaseDatabase.getInstance().getReference("messages").push()
+            val reference = FirebaseDatabase.getInstance().getReference("user-messages/${fromId}/${toId}").push()
+            val toReference = FirebaseDatabase.getInstance().getReference("user-messages/${toId}/${fromId}").push()
 
             val chatMessage = ChatMessage(message = message, fromId = fromId!!,toId = toId!!,  timestamp = System.currentTimeMillis(), id = reference.key!!)
             reference.setValue(chatMessage).addOnSuccessListener {
                 Log.i("message_sent", "performSendMessage: $it")
-                message_edit_text.setText("")
+                message_edit_text.text.clear()
+                recycler_chat_window.scrollToPosition(adapter.itemCount - 1)
             }
+            toReference.setValue(chatMessage)
+
+            val latestMessageRef = FirebaseDatabase.getInstance().getReference("latest-messages/${fromId}/${toId}")
+            latestMessageRef.setValue(chatMessage)
+
+            val latestToMessageRef = FirebaseDatabase.getInstance().getReference("latest-messages/${toId}/${fromId}")
+            latestToMessageRef.setValue(chatMessage)
+
         }else {
             Log.i("message_sent", "error: ${message}, ${fromId}, ${toId}")
         }
