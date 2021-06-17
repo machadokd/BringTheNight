@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -73,6 +75,7 @@ class FeedUsersActivity : AppCompatActivity() {
 
         val eventos : MutableList<Evento> = ArrayList()
         eventos.clear()
+        Log.e("ERRO", "ERRO")
 
         val postListener = object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -87,6 +90,7 @@ class FeedUsersActivity : AppCompatActivity() {
                 RecyclerFeedUser.apply{
                     var user = auth.currentUser
                     layoutManager = LinearLayoutManager(this@FeedUsersActivity)
+
                     adapter = FeedUsersAdapter(this@FeedUsersActivity, eventos as ArrayList<Evento>, user as FirebaseUser)
                 }
 

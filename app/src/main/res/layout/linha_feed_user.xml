@@ -50,53 +50,24 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
 
-    <ImageView
-        android:id="@+id/likes_evento_feed_user"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imagem_evento_feed_users"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="5dp"
-        android:background="@drawable/ic_like" />
-
-    <TextView
-        android:id="@+id/likes_evento_feed_user_descricao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imagem_evento_feed_users"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginBottom="6dp"
-        android:padding="5dp"
-        android:text="likes"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imagem_evento_feed_users"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="78dp"
-        android:background="@drawable/ic_comment" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imagem_evento_feed_users"
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="120dp"
-        android:background="@drawable/ic_share" />
-
     <TextView
         android:id="@+id/descricao_evento_feed_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="dahdhahdaadhadiad dadjad ajfhadua asufhsa"
-        android:layout_below="@id/likes_evento_feed_user_descricao"
+        android:layout_below="@id/imagem_evento_feed_users"
         android:layout_margin="6dp"
         android:padding="5dp"
         android:textColor="@color/black"
         android:textSize="11sp" />
 
+    <Button
+        android:id="@+id/ver_mais_evento_feed_users"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/descricao_evento_feed_users"
+        android:layout_marginLeft="155dp"
+        android:text="Ver Mais"
+        android:layout_marginTop="7dp" />
 
 </RelativeLayout>
