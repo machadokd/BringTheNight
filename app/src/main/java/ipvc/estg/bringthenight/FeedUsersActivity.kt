@@ -31,7 +31,7 @@ class FeedUsersActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.empresa_menu, menu)
+        menuInflater.inflate(R.menu.user_menu, menu)
         return true
     }
 
@@ -46,10 +46,10 @@ class FeedUsersActivity : AppCompatActivity() {
 //            true
 //        }
 //
-//        R.id.chat -> {
+        R.id.chat -> {
 //            toChatEmpresaActivity()
-//            true
-//        }
+            true
+        }
 
         else -> super.onOptionsItemSelected(item)
     }

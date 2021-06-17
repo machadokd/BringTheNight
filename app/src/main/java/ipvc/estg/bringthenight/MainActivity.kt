@@ -47,6 +47,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
+        if (user != null) {
+            FirebaseDatabase.getInstance().reference.child("users").child(user.uid).get().addOnCompleteListener {
+                val temp_user = it.result.getValue(User::class.java)
+                if (temp_user != null) {
+                    if (temp_user!!.tipo == "empresa"){
+                        val intent = Intent(this@MainActivity, FeedEmpresasActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }else if (temp_user!!.tipo == "user"){
+                        val intent = Intent(this@MainActivity, FeedUsersActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+            }
+        }
+
 
     }
 
