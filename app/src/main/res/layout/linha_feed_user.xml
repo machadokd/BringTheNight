@@ -51,6 +51,7 @@
 
 
     <ImageView
+        android:id="@+id/likes_evento_feed_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imagem_evento_feed_users"
@@ -59,7 +60,7 @@
         android:background="@drawable/ic_like" />
 
     <TextView
-        android:id="@+id/Likes"
+        android:id="@+id/likes_evento_feed_user_descricao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imagem_evento_feed_users"
@@ -91,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="dahdhahdaadhadiad dadjad ajfhadua asufhsa"
-        android:layout_below="@id/Likes"
+        android:layout_below="@id/likes_evento_feed_user_descricao"
         android:layout_margin="6dp"
         android:padding="5dp"
         android:textColor="@color/black"

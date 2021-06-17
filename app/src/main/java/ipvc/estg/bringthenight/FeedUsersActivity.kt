@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import ipvc.estg.bringthenight.adapters.FeedUsersAdapter
 import ipvc.estg.bringthenight.models.Evento
@@ -17,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_feed_users.*
 
 class FeedUsersActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,7 @@ class FeedUsersActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_logout)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        auth = FirebaseAuth.getInstance()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,10 +79,10 @@ class FeedUsersActivity : AppCompatActivity() {
                 children.forEach{
                     eventos.add(it.getValue(Evento::class.java)!!)
                 }
-
                 RecyclerFeedUser.apply{
+                    var user = auth.currentUser
                     layoutManager = LinearLayoutManager(this@FeedUsersActivity)
-                    adapter = FeedUsersAdapter(this@FeedUsersActivity, eventos as ArrayList<Evento>)
+                    adapter = FeedUsersAdapter(this@FeedUsersActivity, eventos as ArrayList<Evento>, user as FirebaseUser)
                 }
 
 
