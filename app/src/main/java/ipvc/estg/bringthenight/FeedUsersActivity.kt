@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -59,11 +60,11 @@ class FeedUsersActivity : AppCompatActivity() {
             true
         }
 
-//        R.id.map -> {
-//            toEventMapActivity()
-//            true
-//        }
-//
+       R.id.map -> {
+           toEventMapActivity()
+           true
+       }
+
         R.id.chat -> {
             toChatUserActivity()
             true
@@ -115,6 +116,11 @@ class FeedUsersActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun toEventMapActivity() {
+        val intent = Intent(this@FeedUsersActivity, MapsUsersActivity::class.java)
+        startActivity(intent)
     }
 }
 

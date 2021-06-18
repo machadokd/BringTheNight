@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/map"
+        android:title="@string/ver_mapa"
+        android:icon="@drawable/ic_map"
+        android:iconTint="@color/white"
+        app:showAsAction="always"
+        />
+
+    <item
         android:id="@+id/chat"
         android:title="@string/chat"
         android:icon="@drawable/ic_chat"
         android:iconTint="@color/white"
         app:showAsAction="always"
         />
+
+
 
 </menu>
