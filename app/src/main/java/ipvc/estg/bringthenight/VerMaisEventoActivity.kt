@@ -1,7 +1,9 @@
 package ipvc.estg.bringthenight
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -34,6 +36,7 @@ class VerMaisEventoActivity : AppCompatActivity() {
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private lateinit var username : String
+    private lateinit var intent_event : Evento
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +70,25 @@ class VerMaisEventoActivity : AppCompatActivity() {
                 send_comentario.visibility = ImageView.GONE
             }
         }
+
         listenForMessages()
+
+        share_button.setOnClickListener {
+            val location = getAddress(intent_event.latitude, intent_event.longitude)
+
+            val shareIntent = Intent().apply {
+                this.action = Intent.ACTION_SEND
+                this.putExtra(Intent.EXTRA_TEXT, "A empresa ${intent_event.nome_establecimento} está a realizar o evento ${intent_event.titulo} no local ${location}.")
+                this.type = "text/plain"
+            }
+            startActivity(shareIntent)
+        }
+    }
+
+    private fun getAddress(lat :Double, long: Double):String?{
+        val geocoder = Geocoder(this)
+        val list = geocoder.getFromLocation(lat, long, 1)
+        return list[0].getAddressLine(0)
     }
 
 
@@ -111,6 +132,7 @@ class VerMaisEventoActivity : AppCompatActivity() {
 
         ref.child("events").child(id_evento!!).get().addOnCompleteListener {
             val evento = it.result.getValue(Evento::class.java) ?: return@addOnCompleteListener
+            intent_event = it.result.getValue(Evento::class.java) ?: return@addOnCompleteListener
             FirebaseStorage.getInstance().getReference()
 
             val storageRef = FirebaseStorage.getInstance().getReference("images/${evento.estabelecimento}/${evento.imagem}")
