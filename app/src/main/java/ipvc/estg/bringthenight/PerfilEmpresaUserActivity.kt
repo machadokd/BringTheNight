@@ -64,6 +64,7 @@ class PerfilEmpresaUserActivity : AppCompatActivity() {
 //            Log.i("firebase_image", "Image $it")
 //            holder.itemView.imageView.setImageBitmap(bitmap!!)
             user_evento_profile_image.setImageBitmap(bitmap!!)
+            user_evento_profile_image.rotation = 90f
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
