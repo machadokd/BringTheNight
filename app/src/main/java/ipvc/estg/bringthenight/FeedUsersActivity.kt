@@ -141,7 +141,7 @@ class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Cont
             Log.e("firebase", "Error getting data", it)
         }
 
-        val storageRefPerfil = FirebaseStorage.getInstance().getReference("images/${evento.estabelecimento}/${evento.imagem}")
+        val storageRefPerfil = FirebaseStorage.getInstance().getReference("images/${evento.estabelecimento}/perfil/${empresa.imagem}")
         val localFilePerfil = File.createTempFile("temp_file", "png")
         var bitmapPerfil: Bitmap? = null
 
@@ -149,6 +149,7 @@ class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Cont
             bitmapPerfil = BitmapFactory.decodeFile(localFilePerfil.absolutePath)
             Log.i("bitmapPerfil", "bitmapPerfil ${bitmapPerfil}")
             viewHolder.itemView.imagem_perfil_empresa_feed_users.setImageBitmap(bitmapPerfil!!)
+            viewHolder.itemView.imagem_perfil_empresa_feed_users.rotation = 90f
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
