@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var userid: String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, RegisterActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     public override fun onStart() {

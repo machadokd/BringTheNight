@@ -45,6 +45,7 @@ class FeedUsersActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         auth = FirebaseAuth.getInstance()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -112,36 +113,8 @@ class FeedUsersActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
             }
-
         })
 
-
-//        val eventos : MutableList<Evento> = ArrayList()
-//        eventos.clear()
-//        Log.e("ERRO", "ERRO")
-//
-//        val postListener = object : ValueEventListener {
-//            override fun onCancelled(p0: DatabaseError) {
-//                Log.d("Machado", "Deu erro a ir buscar os dados")
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot) {
-//                val children = p0!!.children
-//                children.forEach{
-//                    eventos.add(it.getValue(Evento::class.java)!!)
-//                }
-//                RecyclerFeedUser.apply{
-//                    var user = auth.currentUser
-//                    layoutManager = LinearLayoutManager(this@FeedUsersActivity)
-//
-//                    adapter = FeedUsersAdapter(this@FeedUsersActivity, eventos as ArrayList<Evento>, user as FirebaseUser)
-//                }
-//
-//
-//            }
-//
-//        }
-//        database.addValueEventListener(postListener)
     }
 }
 
@@ -173,6 +146,7 @@ class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Cont
         }.addOnFailureListener {
             Log.e("firebase", "Error getting data", it)
         }
+
 
 
         viewHolder.itemView.ver_mais_evento_feed_users.setOnClickListener {
