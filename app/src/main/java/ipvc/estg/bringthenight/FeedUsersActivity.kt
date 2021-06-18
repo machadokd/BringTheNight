@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -59,11 +60,11 @@ class FeedUsersActivity : AppCompatActivity() {
             true
         }
 
-//        R.id.map -> {
-//            toEventMapActivity()
-//            true
-//        }
-//
+       R.id.map -> {
+           toEventMapActivity()
+           true
+       }
+
         R.id.chat -> {
             toChatUserActivity()
             true
@@ -116,6 +117,11 @@ class FeedUsersActivity : AppCompatActivity() {
         })
 
     }
+
+    private fun toEventMapActivity() {
+        val intent = Intent(this@FeedUsersActivity, MapsUsersActivity::class.java)
+        startActivity(intent)
+    }
 }
 
 class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Context) : Item<GroupieViewHolder>() {
@@ -161,6 +167,7 @@ class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Cont
 
 
     }
+
 
     override fun getLayout(): Int {
         return R.layout.linha_feed_user
