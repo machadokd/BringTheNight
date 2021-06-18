@@ -147,6 +147,9 @@ class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Cont
             Log.e("firebase", "Error getting data", it)
         }
 
+        viewHolder.itemView.imagem_perfil_empresa_feed_users.setOnClickListener { goToPerfileEmpresaUser() }
+
+        viewHolder.itemView.nome_empresa_feed_users.setOnClickListener { goToPerfileEmpresaUser() }
 
 
         viewHolder.itemView.ver_mais_evento_feed_users.setOnClickListener {
@@ -159,6 +162,13 @@ class FeedUsersEvento(val evento : Evento, val empresa : User, val context: Cont
 
         }
 
+
+    }
+
+    private fun goToPerfileEmpresaUser() {
+        val intent = Intent(context, PerfilEmpresaUserActivity::class.java)
+        intent.putExtra(UserNewChatActivity.USER_KEY, empresa)
+        context.startActivity(intent)
 
     }
 

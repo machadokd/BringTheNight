@@ -47,9 +47,8 @@ class VerMaisEventoActivity : AppCompatActivity() {
         carregaEvento()
 
         toggle_like.setOnCheckedChangeListener { buttonView, isChecked ->
+            if ( !buttonView.isPressed) return@setOnCheckedChangeListener
             like_event(isChecked)
-            Log.e("CHECK",  buttonView.isChecked.toString())
-            Log.e("CHECK2",  isChecked.toString())
         }
 
         recycler_comentarios.adapter = adapter

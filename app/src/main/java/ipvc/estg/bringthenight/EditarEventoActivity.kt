@@ -36,9 +36,6 @@ class EditarEventoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private var data : Date? = null
 
     private var image : Uri? = null
-//    val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//        onActivityResult(PICK_IMAGE, result)
-//    }
 
     private val newWordActivityRequestCode = 1
 
